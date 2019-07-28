@@ -1,2 +1,12 @@
 ﻿
-@Html.Raw(ViewData["NoteContent"])
+@if (ViewData["NoteHtml"] != null)
+{
+    @Html.Raw(ViewData["NoteHtml"])
+}
+
+@if (ViewData["NoteText"] != null)
+{
+    <pre>
+        @ViewData["NoteText"]
+    </pre>
+}

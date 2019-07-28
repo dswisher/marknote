@@ -15,15 +15,24 @@ namespace marknote.Controllers
         {
             string fullPath = Path.Combine(NoteDir, path);
 
+            // TODO - do a better job hunting for files
             if (!System.IO.File.Exists(fullPath))
             {
                 return NotFound();
             }
 
-            string content = Markdown.ToHtml(System.IO.File.ReadAllText(fullPath));
+            string fileContent = System.IO.File.ReadAllText(fullPath);
+
+            if (path.EndsWith(".md"))
+            {
+                ViewData["NoteHtml"] = Markdown.ToHtml(fileContent);
+            }
+            else
+            {
+                ViewData["NoteText"] = fileContent;
+            }
 
             ViewData["Title"] = path;   // TODO - pull this from file metadata?
-            ViewData["NoteContent"] = content;
 
             return View();
         }
