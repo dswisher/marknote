@@ -1,0 +1,6 @@
+*.swp
+
+src/.vscode
+src/bin
+src/obj
+
