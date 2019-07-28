@@ -8,24 +8,22 @@ namespace marknote.Controllers
 {
     public class NoteController : Controller
     {
+        // TODO - pull this from config!
+        private const string NoteDir = "/Users/swisherd/git/notes";
+
         public IActionResult Render(string path)
         {
-            string content = Markdown.ToHtml(String.Format("This is a text with some *emphasis*. Path `{0}`.", path));
+            string fullPath = Path.Combine(NoteDir, path);
 
+            if (!System.IO.File.Exists(fullPath))
+            {
+                return NotFound();
+            }
+
+            string content = Markdown.ToHtml(System.IO.File.ReadAllText(fullPath));
+
+            ViewData["Title"] = path;   // TODO - pull this from file metadata?
             ViewData["NoteContent"] = content;
-
-            // string content = String.Format("Hello world!  Path='{0}'.", path);
-            // byte[] bytes = Encoding.UTF8.GetBytes(content);
-
-            // var stream = new MemoryStream(bytes);
-            // var mimeType = "text/html";
-            // // var mimeType = "text/plain";
-
-            // var fileStreamResult = new FileStreamResult(stream, mimeType);
-
-            // // fileStreamResult.FileDownloadName = "FileStreamExample.csv";
-
-            // return fileStreamResult;
 
             return View();
         }
