@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Core;
+using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers.Classic;
@@ -28,7 +29,7 @@ namespace marknote.Services
         {
             string indexPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ".marknote", "index");
 
-            analyzer = new WhitespaceAnalyzer(Lucene.Net.Util.LuceneVersion.LUCENE_48);
+            analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
 
             indexDirectoryInfo = new DirectoryInfo(indexPath);
 
@@ -95,20 +96,24 @@ namespace marknote.Services
             var parsed = queryParser.Parse(query);
             ScoreDoc[] hits = indexSearcher.Search(parsed, null, 40).ScoreDocs;
 
-            for (int i = 0; i < hits.Length; i++)
+            foreach (var hit in hits)
             {
-                var doc = indexSearcher.Doc(hits[i].Doc);
+                var foundDoc = indexSearcher.Doc(hit.Doc);
+
+                string name = foundDoc.Get("Name");
+
+                // Console.WriteLine("Hit: {0}", name);
+                // Console.WriteLine("Raw: {0}", hit);
+                // Console.WriteLine("Score: {0}", hit.Score);
 
                 var model = new SearchResultModel
                 {
-                    Name = doc.Get("Name")
+                    Name = foundDoc.Get("Name")
                 };
 
                 result.Add(model);
             }
 
-            // TODO
-            // return string.Format("Query: '{0}', {1} hits", query, hits.Length);
             return result;
         }
 
