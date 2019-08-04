@@ -1,8 +1,11 @@
 
+using System.Collections.Generic;
+using marknote.Models;
+
 namespace marknote.Services
 {
     public interface INoteSearch
     {
-        string Search(string query);
+        List<SearchResultModel> Search(string query);
     }
 }

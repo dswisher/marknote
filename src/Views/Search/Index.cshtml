@@ -14,6 +14,11 @@
 
 <h2>Results</h2>
 
-<p>Coming soon.</p>
+<div><span>@Model.Results.Count hits</span></div>
 
-<p>@Model.Results</p>
+<ul>
+    @foreach (var item in Model.Results)
+    {
+        <li><a href="/note/@item.Name">@item.Name</a></li>
+    }
+</ul>
