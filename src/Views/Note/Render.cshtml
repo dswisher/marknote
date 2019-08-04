@@ -1,12 +1,31 @@
-﻿
-@if (ViewData["NoteHtml"] != null)
-{
-    @Html.Raw(ViewData["NoteHtml"])
+﻿@model marknote.Models.NoteModel
+
+@{
+    ViewData["Title"] = Model.Title;
 }
 
-@if (ViewData["NoteText"] != null)
+@if (@Model.Recent != null)
+{
+    <h2>Recent</h2>
+    <ul>
+        @foreach (var item in @Model.Recent)
+        {
+            <li><a href="/note/@item">@item</a></li>
+        }
+    </ul>
+    <hr/>
+}
+
+<div><span>Path: @Model.FullPath</span></div>
+
+@if (Model.NoteHtml != null)
+{
+    @Html.Raw(Model.NoteHtml)
+}
+
+@if (Model.NoteText != null)
 {
     <pre>
-        @ViewData["NoteText"]
+        @Model.NoteText
     </pre>
 }

@@ -1,19 +1,30 @@
 using System.IO;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Markdig;
-using System;
+using marknote.Services;
+using marknote.Models;
 
 namespace marknote.Controllers
 {
     public class NoteController : Controller
     {
-        // TODO - pull this from config!
-        private const string NoteDir = "/Users/swisherd/git/notes";
+        private readonly INotebook notebook;
+
+        public NoteController(INotebook notebook)
+        {
+            this.notebook = notebook;
+        }
 
         public IActionResult Render(string path)
         {
-            string fullPath = Path.Combine(NoteDir, path);
+            string fullPath = Path.Combine(notebook.NoteDir, path);
+
+            NoteModel model = new NoteModel
+            {
+                Title = path,
+                FullPath = fullPath,
+                Recent = notebook.GetRecent()
+            };
 
             // TODO - do a better job hunting for files
             if (!System.IO.File.Exists(fullPath))
@@ -25,16 +36,21 @@ namespace marknote.Controllers
 
             if (path.EndsWith(".md"))
             {
-                ViewData["NoteHtml"] = Markdown.ToHtml(fileContent);
+                // ViewData["NoteHtml"] = Markdown.ToHtml(fileContent);
+                model.NoteHtml = Markdown.ToHtml(fileContent);
             }
             else
             {
-                ViewData["NoteText"] = fileContent;
+                // ViewData["NoteText"] = fileContent;
+                model.NoteText = fileContent;
             }
 
-            ViewData["Title"] = path;   // TODO - pull this from file metadata?
+            // ViewData["Title"] = path;   // TODO - pull this from file metadata?
 
-            return View();
+            // ViewData["Recent"] = notebook.GetRecent();
+            // ViewData["Path"] = fullPath;
+
+            return View(model);
         }
     }
 }
