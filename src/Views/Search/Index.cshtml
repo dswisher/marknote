@@ -1,0 +1,19 @@
+﻿@model marknote.Models.SearchModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h2>Search</h2>
+
+<form method="GET" action="/search">
+    <input type="text" name="query" placeholder="Query" value="@Model.Query" />
+    <input type="submit" />
+</form>
+
+
+<h2>Results</h2>
+
+<p>Coming soon.</p>
+
+<p>@Model.Results</p>

@@ -4,6 +4,13 @@
     ViewData["Title"] = Model.Title;
 }
 
+<h2>Search</h2>
+
+<form method="GET" action="/search">
+    <input type="text" name="query" placeholder="Query" />
+    <input type="submit" />
+</form>
+
 @if (@Model.Recent != null)
 {
     <h2>Recent</h2>
