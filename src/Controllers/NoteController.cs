@@ -36,19 +36,12 @@ namespace marknote.Controllers
 
             if (path.EndsWith(".md"))
             {
-                // ViewData["NoteHtml"] = Markdown.ToHtml(fileContent);
                 model.NoteHtml = Markdown.ToHtml(fileContent);
             }
             else
             {
-                // ViewData["NoteText"] = fileContent;
                 model.NoteText = fileContent;
             }
-
-            // ViewData["Title"] = path;   // TODO - pull this from file metadata?
-
-            // ViewData["Recent"] = notebook.GetRecent();
-            // ViewData["Path"] = fullPath;
 
             return View(model);
         }

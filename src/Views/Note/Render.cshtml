@@ -17,7 +17,7 @@
     <ul>
         @foreach (var item in @Model.Recent)
         {
-            <li><a href="/note/@item">@item</a></li>
+            <li><a href="@item.Url">@item.Name</a> - @item.Path - @item.LastModified</li>
         }
     </ul>
     <hr/>

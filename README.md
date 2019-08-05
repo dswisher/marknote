@@ -6,9 +6,11 @@ Markdown based note taking using C#
 
 * Style the note page (recent/search in left nav, etc)
 * Style the search page
-* Support subdirectories in the recent list and search results
 * Replace Console.WriteLine calls with proper logging
 * Add highlighting to search results - Lucene.Net.Highlighter, old [SO post](https://stackoverflow.com/questions/33312788/lucene-net-highlight-searched-term-in-the-text) and [SO post](https://stackoverflow.com/questions/31606041/make-lucene-net-highlighter-show-matches-from-a-specific-field-only)
+
+## DONE
+* ~~Support subdirectories in the recent list and search results~~
 
 ## Links
 

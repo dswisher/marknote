@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using marknote.Models;
 
 namespace marknote.Services
 {
@@ -7,6 +8,7 @@ namespace marknote.Services
     {
         string NoteDir { get; }
 
-        IEnumerable<string> GetRecent();
+        IEnumerable<NoteEntry> GetRecent(int max = 5);
+        IEnumerable<NoteEntry> GetAllNotes();
     }
 }

@@ -11,7 +11,6 @@ namespace marknote.Models
         public string NoteHtml { get; set; }
         public string NoteText { get; set; }
 
-        // TODO - replace string with a RecentItem class
-        public IEnumerable<string> Recent { get; set; }
+        public IEnumerable<NoteEntry> Recent { get; set; }
     }
 }

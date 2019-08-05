@@ -17,6 +17,7 @@ namespace marknote.Services
 {
     public class NoteSearch : INoteSearch, IDisposable
     {
+        private readonly INotebook notebook;
         private readonly DirectoryInfo indexDirectoryInfo;
         private readonly Analyzer analyzer;
         private FSDirectory indexDirectory;
@@ -27,6 +28,8 @@ namespace marknote.Services
 
         public NoteSearch(INotebook notebook)
         {
+            this.notebook = notebook;
+
             string indexPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ".marknote", "index");
 
             analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
@@ -54,19 +57,15 @@ namespace marknote.Services
 
                 using (var indexWriter = new IndexWriter(indexDir, config))
                 {
-                    var noteDirInfo = new DirectoryInfo(notePath);
-
-                    foreach (var file in noteDirInfo.GetFiles())
+                    foreach (var note in notebook.GetAllNotes())
                     {
-                        if (!file.Name.EndsWith(".md") && !file.Name.EndsWith(".txt"))
-                        {
-                            continue;
-                        }
-
                         var doc = new Document();
 
-                        doc.AddStringField("Name", file.Name, Field.Store.YES);
-                        doc.AddTextField("Content", file.OpenText());
+                        var reader = new FileInfo(note.Path).OpenText();
+
+                        doc.AddStringField("Name", note.Name, Field.Store.YES);
+                        doc.AddStringField("Url", note.Url, Field.Store.YES);
+                        doc.AddTextField("Content", reader);
 
                         indexWriter.AddDocument(doc);
                     }
@@ -108,7 +107,8 @@ namespace marknote.Services
 
                 var model = new SearchResultModel
                 {
-                    Name = foundDoc.Get("Name")
+                    Name = foundDoc.Get("Name"),
+                    Url = foundDoc.Get("Url")
                 };
 
                 result.Add(model);
