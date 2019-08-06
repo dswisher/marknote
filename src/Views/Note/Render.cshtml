@@ -4,6 +4,8 @@
     ViewData["Title"] = Model.Title;
 }
 
+<div class="left-nav">
+
 <h2>Search</h2>
 
 <form method="GET" action="/search">
@@ -17,22 +19,29 @@
     <ul>
         @foreach (var item in @Model.Recent)
         {
-            <li><a href="@item.Url">@item.Name</a> - @item.Path - @item.LastModified</li>
+            <li><a href="@item.Url">@item.Name</a> <br/><span class="note-date">@item.LastModified</span></li>
         }
     </ul>
     <hr/>
 }
 
-<div><span>Path: @Model.FullPath</span></div>
+</div>
+<div class="main-content">
+
 
 @if (Model.NoteHtml != null)
 {
+    <div class="note-path"><span>@Model.FullPath</span></div>
     @Html.Raw(Model.NoteHtml)
 }
 
 @if (Model.NoteText != null)
 {
+    <div class="note-path"><span>@Model.FullPath</span></div>
+    <h2>@Model.Title</h2>
     <pre>
         @Model.NoteText
     </pre>
 }
+
+</div>

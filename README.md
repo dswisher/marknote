@@ -8,6 +8,7 @@ Markdown based note taking using C#
 * Style the search page
 * Replace Console.WriteLine calls with proper logging
 * Add highlighting to search results - Lucene.Net.Highlighter, old [SO post](https://stackoverflow.com/questions/33312788/lucene-net-highlight-searched-term-in-the-text) and [SO post](https://stackoverflow.com/questions/31606041/make-lucene-net-highlighter-show-matches-from-a-specific-field-only)
+* Add copy-to-clipboard button next to page path
 
 ## DONE
 * ~~Support subdirectories in the recent list and search results~~

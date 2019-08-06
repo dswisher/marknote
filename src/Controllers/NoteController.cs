@@ -23,7 +23,7 @@ namespace marknote.Controllers
             {
                 Title = path,
                 FullPath = fullPath,
-                Recent = notebook.GetRecent()
+                Recent = notebook.GetRecent(8)
             };
 
             // TODO - do a better job hunting for files
