@@ -4,6 +4,7 @@ Markdown based note taking using C#
 
 ## TODO
 
+* Update search periodically (ideally, filewatcher)
 * Style the note page (recent/search in left nav, etc)
 * Style the search page
 * Replace Console.WriteLine calls with proper logging
